@@ -1,0 +1,13 @@
+com\gamelog\model\Game.class
+com\gamelog\service\UserService.class
+com\gamelog\servlet\BacklogServlet.class
+com\gamelog\dao\GameDAO.class
+com\gamelog\service\UserOperations.class
+com\gamelog\exception\InvalidInputException.class
+com\gamelog\servlet\LogoutServlet.class
+com\gamelog\app\Main.class
+com\gamelog\servlet\RegisterServlet.class
+com\gamelog\dao\UserDAO.class
+com\gamelog\servlet\LoginServlet.class
+com\gamelog\dao\DatabaseConnection.class
+com\gamelog\model\User.class

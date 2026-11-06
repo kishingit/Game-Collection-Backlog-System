@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Log - Portal Login & Register</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="game-container">
+        <header class="game-header">
+            <div class="logo">GAME<span>LOG</span></div>
+            <p class="subtitle">Backlog & Collection Manager</p>
+        </header>
+
+        <!-- Message Feedback -->
+        <p id="message" class="error"></p>
+
+        <!-- Registration Section -->
+        <section id="registerSection" hidden>
+            <h2>User Registration</h2>
+            <form id="registerForm">
+                <div class="input-group">
+                    <label for="regUsername">USERNAME:</label>
+                    <input type="text" id="regUsername" placeholder="Enter username..." required>
+                </div>
+
+                <div class="input-group">
+                    <label for="regPassword">PASSWORD:</label>
+                    <input type="password" id="regPassword" placeholder="Enter password..." required>
+                </div>
+
+                <button type="submit" class="btn btn-primary">REGISTER ACCOUNT</button>
+            </form>
+            <div class="toggle-box">
+                <p>Already registered? <button type="button" id="showLogin" class="btn-link">Go to Login</button></p>
+            </div>
+        </section>
+
+        <!-- Login Section -->
+        <section id="loginSection">
+            <h2>Player Login</h2>
+            <form id="loginForm">
+                <div class="input-group">
+                    <label for="loginUsername">USERNAME:</label>
+                    <input type="text" id="loginUsername" placeholder="Enter username..." required>
+                </div>
+
+                <div class="input-group">
+                    <label for="loginPassword">PASSWORD:</label>
+                    <input type="password" id="loginPassword" placeholder="Enter password..." required>
+                </div>
+
+                <button type="submit" class="btn btn-primary">PRESS START</button>
+            </form>
+            <div class="toggle-box">
+                <p>Need an account? <button type="button" id="showRegister" class="btn-link">Go to Registration</button></p>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Toggle view between Login and Register
+        const loginSection = document.getElementById("loginSection");
+        const registerSection = document.getElementById("registerSection");
+        const showRegisterBtn = document.getElementById("showRegister");
+        const showLoginBtn = document.getElementById("showLogin");
+
+        showRegisterBtn.addEventListener("click", () => {
+            loginSection.hidden = true;
+            registerSection.hidden = false;
+        });
+
+        showLoginBtn.addEventListener("click", () => {
+            registerSection.hidden = true;
+            loginSection.hidden = false;
+        });
+
+        // Redirect to dashboard on Login submit
+        document.getElementById("loginForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+            const username = document.getElementById("loginUsername").value.trim();
+            if (username) {
+                // Save gamer tag for dashboard display
+                localStorage.setItem("gamerTag", username);
+                window.location.href = "dashboard.html";
+            }
+        });
+
+        // Redirect to dashboard on Register submit
+        document.getElementById("registerForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+            const username = document.getElementById("regUsername").value.trim();
+            if (username) {
+                localStorage.setItem("gamerTag", username);
+                window.location.href = "dashboard.html";
+            }
+        });
+    </script>
+</body>
+</html>

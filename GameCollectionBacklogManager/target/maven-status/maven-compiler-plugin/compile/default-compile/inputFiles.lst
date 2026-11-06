@@ -1,0 +1,13 @@
+C:\Users\jaiki\OneDrive\Desktop\JAVA Project\GameCollectionBacklogManager\src\main\java\com\gamelog\app\Main.java
+C:\Users\jaiki\OneDrive\Desktop\JAVA Project\GameCollectionBacklogManager\src\main\java\com\gamelog\dao\DatabaseConnection.java
+C:\Users\jaiki\OneDrive\Desktop\JAVA Project\GameCollectionBacklogManager\src\main\java\com\gamelog\dao\GameDAO.java
+C:\Users\jaiki\OneDrive\Desktop\JAVA Project\GameCollectionBacklogManager\src\main\java\com\gamelog\dao\UserDAO.java
+C:\Users\jaiki\OneDrive\Desktop\JAVA Project\GameCollectionBacklogManager\src\main\java\com\gamelog\exception\InvalidInputException.java
+C:\Users\jaiki\OneDrive\Desktop\JAVA Project\GameCollectionBacklogManager\src\main\java\com\gamelog\model\Game.java
+C:\Users\jaiki\OneDrive\Desktop\JAVA Project\GameCollectionBacklogManager\src\main\java\com\gamelog\model\User.java
+C:\Users\jaiki\OneDrive\Desktop\JAVA Project\GameCollectionBacklogManager\src\main\java\com\gamelog\service\UserOperations.java
+C:\Users\jaiki\OneDrive\Desktop\JAVA Project\GameCollectionBacklogManager\src\main\java\com\gamelog\service\UserService.java
+C:\Users\jaiki\OneDrive\Desktop\JAVA Project\GameCollectionBacklogManager\src\main\java\com\gamelog\servlet\BacklogServlet.java
+C:\Users\jaiki\OneDrive\Desktop\JAVA Project\GameCollectionBacklogManager\src\main\java\com\gamelog\servlet\LoginServlet.java
+C:\Users\jaiki\OneDrive\Desktop\JAVA Project\GameCollectionBacklogManager\src\main\java\com\gamelog\servlet\LogoutServlet.java
+C:\Users\jaiki\OneDrive\Desktop\JAVA Project\GameCollectionBacklogManager\src\main\java\com\gamelog\servlet\RegisterServlet.java

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player Dashboard - Game Backlog Manager</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Additional styling for table action buttons and inputs */
+        .action-btn {
+            background: transparent;
+            border: 1px solid cyan;
+            color: cyan;
+            padding: 4px 10px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            margin-right: 5px;
+            transition: all 0.2s ease;
+        }
+        .action-btn:hover {
+            background: cyan;
+            color: #0d0f18;
+            box-shadow: 0 0 8px cyan;
+        }
+        .action-btn.delete-btn {
+            border-color: #ff0055;
+            color: #ff0055;
+        }
+        .action-btn.delete-btn:hover {
+            background: #ff0055;
+            color: #fff;
+            box-shadow: 0 0 8px #ff0055;
+        }
+        .action-btn.save-btn {
+            border-color: #00ff66;
+            color: #00ff66;
+        }
+        .action-btn.save-btn:hover {
+            background: #00ff66;
+            color: #0d0f18;
+            box-shadow: 0 0 8px #00ff66;
+        }
+        .edit-input, .edit-select {
+            background: #141824;
+            border: 1px solid cyan;
+            color: #fff;
+            padding: 4px;
+            border-radius: 4px;
+            font-family: 'Rajdhani', sans-serif;
+            width: 90%;
+        }
+    </style>
+</head>
+<body class="dashboard-body">
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="logo">GAME<span>LOG</span></div>
+            <div class="user-badge">
+                <span>PLAYER: <strong>GamerTag99</strong></span>
+                <a href="index.html" class="btn btn-logout" style="text-decoration:none;">LOGOUT</a>
+            </div>
+        </header>
+
+        <!-- Main Dashboard Content -->
+        <main class="dashboard-main">
+            <!-- Add Game Section -->
+            <section class="card add-game-card">
+                <h2>Add New Title</h2>
+                <form id="addGameForm" class="add-game-form">
+                    <div class="input-group">
+                        <label for="gameTitle">Game Title</label>
+                        <input type="text" id="gameTitle" placeholder="e.g. Cyberpunk 2077..." required>
+                    </div>
+                    <div class="input-group">
+                        <label for="gamePlatform">Platform</label>
+                        <input type="text" id="gamePlatform" placeholder="PC, PS5, Switch, Xbox..." required>
+                    </div>
+                    <div class="input-group">
+                        <label for="gameStatus">Status</label>
+                        <select id="gameStatus" class="styled-select">
+                            <option value="BACKLOG">BACKLOG</option>
+                            <option value="PLAYING">PLAYING</option>
+                            <option value="COMPLETED">COMPLETED</option>
+                            <option value="ABANDONED">ABANDONED</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">+ ADD TO BACKLOG</button>
+                </form>
+            </section>
+
+            <!-- Game Collection List -->
+            <section class="card collection-card">
+                <h2>Your Collection (3 Titles)</h2>
+                <div class="game-list">
+                    <table class="game-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Title</th>
+                                <th>Platform</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td class="game-title-cell"><strong>Elden Ring</strong></td>
+                                <td class="game-platform-cell"><span class="platform-badge">PC</span></td>
+                                <td class="game-status-cell"><span class="status-tag status-playing">PLAYING</span></td>
+                                <td>
+                                    <button type="button" class="action-btn edit-btn">Edit</button>
+                                    <button type="button" class="action-btn delete-btn">Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td class="game-title-cell"><strong>The Witcher 3</strong></td>
+                                <td class="game-platform-cell"><span class="platform-badge">PS5</span></td>
+                                <td class="game-status-cell"><span class="status-tag status-completed">COMPLETED</span></td>
+                                <td>
+                                    <button type="button" class="action-btn edit-btn">Edit</button>
+                                    <button type="button" class="action-btn delete-btn">Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td class="game-title-cell"><strong>Hades II</strong></td>
+                                <td class="game-platform-cell"><span class="platform-badge">PC</span></td>
+                                <td class="game-status-cell"><span class="status-tag status-backlog">BACKLOG</span></td>
+                                <td>
+                                    <button type="button" class="action-btn edit-btn">Edit</button>
+                                    <button type="button" class="action-btn delete-btn">Delete</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        const tableBody = document.querySelector(".game-table tbody");
+        const collectionHeading = document.querySelector(".collection-card h2");
+
+        // Helper function to update total title count and recalculate row #s
+        function updateTableIndices() {
+            const rows = tableBody.querySelectorAll("tr");
+            rows.forEach((row, index) => {
+                row.cells[0].textContent = index + 1;
+            });
+            collectionHeading.textContent = `Your Collection (${rows.length} Titles)`;
+        }
+
+        // Add game handler
+        document.getElementById("addGameForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const title = document.getElementById("gameTitle").value.trim();
+            const platform = document.getElementById("gamePlatform").value.trim();
+            const status = document.getElementById("gameStatus").value;
+
+            if (!title || !platform) return;
+
+            const newRow = document.createElement("tr");
+            newRow.innerHTML = `
+                <td></td>
+                <td class="game-title-cell"><strong>${title}</strong></td>
+                <td class="game-platform-cell"><span class="platform-badge">${platform}</span></td>
+                <td class="game-status-cell"><span class="status-tag status-${status.toLowerCase()}">${status}</span></td>
+                <td>
+                    <button type="button" class="action-btn edit-btn">Edit</button>
+                    <button type="button" class="action-btn delete-btn">Delete</button>
+                </td>
+            `;
+
+            tableBody.appendChild(newRow);
+            updateTableIndices();
+
+            document.getElementById("gameTitle").value = "";
+            document.getElementById("gamePlatform").value = "";
+            document.getElementById("gameStatus").value = "BACKLOG";
+        });
+
+        // Edit and Delete Event Delegation
+        tableBody.addEventListener("click", function (e) {
+            const target = e.target;
+            const row = target.closest("tr");
+
+            // Handle Delete
+            if (target.classList.contains("delete-btn")) {
+                row.remove();
+                updateTableIndices();
+                return;
+            }
+
+            // Handle Edit / Save Toggle
+            if (target.classList.contains("edit-btn")) {
+                const titleCell = row.querySelector(".game-title-cell");
+                const platformCell = row.querySelector(".game-platform-cell");
+                const statusCell = row.querySelector(".game-status-cell");
+
+                const isEditing = target.classList.contains("save-btn");
+
+                if (!isEditing) {
+                    // --- SWITCH TO EDIT MODE ---
+                    const currentTitle = titleCell.textContent.trim();
+                    const currentPlatform = platformCell.textContent.trim();
+                    const currentStatus = statusCell.textContent.trim();
+
+                    titleCell.innerHTML = `<input type="text" class="edit-input title-input" value="${currentTitle}">`;
+                    platformCell.innerHTML = `<input type="text" class="edit-input platform-input" value="${currentPlatform}">`;
+                    statusCell.innerHTML = `
+                        <select class="edit-select status-select">
+                            <option value="BACKLOG" ${currentStatus === 'BACKLOG' ? 'selected' : ''}>BACKLOG</option>
+                            <option value="PLAYING" ${currentStatus === 'PLAYING' ? 'selected' : ''}>PLAYING</option>
+                            <option value="COMPLETED" ${currentStatus === 'COMPLETED' ? 'selected' : ''}>COMPLETED</option>
+                            <option value="ABANDONED" ${currentStatus === 'ABANDONED' ? 'selected' : ''}>ABANDONED</option>
+                        </select>
+                    `;
+
+                    target.textContent = "Save";
+                    target.classList.add("save-btn");
+                } else {
+                    // --- SAVE EDITED VALUES ---
+                    const newTitle = titleCell.querySelector(".title-input").value.trim();
+                    const newPlatform = platformCell.querySelector(".platform-input").value.trim();
+                    const newStatus = statusCell.querySelector(".status-select").value;
+
+                    if (!newTitle || !newPlatform) return;
+
+                    titleCell.innerHTML = `<strong>${newTitle}</strong>`;
+                    platformCell.innerHTML = `<span class="platform-badge">${newPlatform}</span>`;
+                    statusCell.innerHTML = `<span class="status-tag status-${newStatus.toLowerCase()}">${newStatus}</span>`;
+
+                    target.textContent = "Edit";
+                    target.classList.remove("save-btn");
+                }
+            }
+        });
+    </script>
+</body>
+</html>

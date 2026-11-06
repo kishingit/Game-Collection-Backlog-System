@@ -1,0 +1,21 @@
+CREATE DATABASE IF NOT EXISTS game_backlog_db;
+USE game_backlog_db;
+
+-- Users Table (Phases 1-4)
+CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Games Table (Backlog Manager Collection)
+CREATE TABLE IF NOT EXISTS games (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    title VARCHAR(100) NOT NULL,
+    platform VARCHAR(50) NOT NULL,
+    status ENUM('BACKLOG', 'PLAYING', 'COMPLETED', 'ABANDONED') DEFAULT 'BACKLOG',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
